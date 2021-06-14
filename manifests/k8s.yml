@@ -1,0 +1,45 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: carvel-demo
+  name: carvel-demo
+spec:
+  replicas: #@ data.values.replicas
+  selector:
+    matchLabels:
+      app: carvel-demo
+  strategy: { }
+  template:
+    metadata:
+      labels:
+        app: carvel-demo
+    spec:
+      containers:
+        - image: app-image
+          name: carvel-demo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: carvel-demo
+spec:
+  selector:
+    app: carvel-demo
+  ports:
+  - port: 80
+    targetPort: 8080
+    name: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: carvel-demo
+spec:
+  defaultBackend:
+    service:
+      name: carvel-demo
+      port:
+        name: http

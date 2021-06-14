@@ -1,0 +1,8 @@
+apiVersion: imgpkg.carvel.dev/v1alpha1
+kind: Bundle
+metadata:
+  name: carvel-demo
+authors:
+- name: mamachanko
+websites:
+  - url: https://github.com/mamachanko/carvel-demo

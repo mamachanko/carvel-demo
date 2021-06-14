@@ -1,0 +1,14 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: kbld.k14s.io/v1alpha1
+kind: Config
+sources:
+  - image: app-image
+    path: .
+    pack:
+      build:
+        builder: paketobuildpacks/builder:0.1.115-base
+destinations:
+  - image: app-image
+    newImage: #@ data.values.image
+    tags: #@ data.values.tags
